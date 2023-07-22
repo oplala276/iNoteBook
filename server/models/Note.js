@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
-const NotesSchema = new Schema({
+const NotesSchema = new mongoose.Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user'
+    },
     title: {
         type: String,
         required: true
@@ -8,12 +12,9 @@ const NotesSchema = new Schema({
     description: {
         type: String,
         required: true,
-        // unique: true
     },
     tag: {
         type: String,
-        default: "General"
-        // required: true
     },
     date: {
         type: Date,
