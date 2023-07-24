@@ -53,6 +53,7 @@ router.post('/login', [
     body('password', "password cannot be blank").exists(),
 
 ], async (req, res) => {
+    let success = false;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -61,10 +62,12 @@ router.post('/login', [
     try {
         let user = await User.findOne({ email })
         if (!user) {
+            success = false;
             return res.status(400).json({ error: "login with valid creadential" })
         }
         const comparePassword = await bcrypt.compare(password, user.password)
         if (!comparePassword) {
+            success = false
             return res.status(400).json({ error: "login with valid creadential" })
 
         }
@@ -74,7 +77,8 @@ router.post('/login', [
             }
         }
         const jwtData = jwt.sign(data, JWT_SECRET);
-        res.json({ jwtData })
+        success = true;
+        res.json({ success, jwtData })
     } catch (error) {
         console.log(error.message);
         res.status(500).send("internal servddder error occured")

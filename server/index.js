@@ -3,6 +3,8 @@ import Connection from './db.js';
 import express from 'express';
 import router from './routes/auth.js';
 import route from './routes/notes.js'
+import cors from 'cors';
+
 
 Connection();
 
@@ -10,6 +12,7 @@ const app = express()
 const port = 5000
 
 app.use(express.json())
+app.use(cors())
 app.use('/auth', router)
 app.use('/notes', route)
 
