@@ -65,7 +65,7 @@ const Notes = () => {
                 </div>
             </div>
 
-            <div className="container my-2">
+            <div className="row my-2">
                 <h2>Your Notes</h2>
                 <div className="container mx-2">
                     {notes.length === 0 && "No notes to display"}
